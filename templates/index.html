@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HWR</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='quix/images/favicon.png') }}">
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-3.3.7-dist/css/bootstrap.css') }}">-->
+    <!--    <link href="{{ url_for('static', filename='lib/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">-->
+
+    <!--    &lt;!&ndash; Pignose Calender &ndash;&gt;-->
+    <!--    <link href="{{ url_for('static', filename='quix/plugins/pg-calendar/css/pignose.calendar.min.css') }}"-->
+    <!--          rel="stylesheet">-->
+    <!--    &lt;!&ndash; Chartist &ndash;&gt;-->
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='quix/plugins/chartist/css/chartist.min.css') }}">-->
+    <!--    <link rel="stylesheet"-->
+    <!--          href="{{ url_for('static', filename='quix/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">-->
+    <!-- Custom Stylesheet -->
+    <!--      <link href="{{ url_for('static', filename='lib/glyphicons/css/bootstrap.css') }}" rel="stylesheet">-->
+    <link href="{{ url_for('static', filename='quix/plugins/toastr/css/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='quix/css/style.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='lib/fileinput/css/fileinput.min.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+    <!--**********************************
+        Nav header start
+    ***********************************-->
+    <div class="nav-header">
+        <div class="brand-logo">
+            <a href="index.html">
+                <b class="logo-abbr"><img src="{{ url_for('static', filename='quix/images/logo.png') }}" alt=""> </b>
+                <span class="logo-compact"><img src="{{ url_for('static', filename='quix/images/logo-compact.png') }}"
+                                                alt=""></span>
+                <span class="brand-title">
+
+                        <img src="{{ url_for('static', filename='quix/images/logo-text.png') }}" alt="">
+                    </span>
+            </a>
+        </div>
+    </div>
+    <!--**********************************
+        Nav header end
+    ***********************************-->
+
+    <!--**********************************
+        Header start
+    ***********************************-->
+    <div class="header">
+        <div class="header-content clearfix">
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="toggle-icon"><i class="icon-menu"></i></span>
+                </div>
+            </div>
+            <div class="header-left">
+            </div>
+            <div class="header-right">
+
+            </div>
+        </div>
+    </div>
+    <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+    <!--**********************************
+        Sidebar start
+    ***********************************-->
+    <div class="nk-sidebar">
+        <div class="nk-nav-scroll">
+            <ul class="metismenu" id="menu">
+                <li class="nav-label">验证</li>
+                <li class="active">
+                    <a href="javascript:void(0)" aria-expanded="false" class="active">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">验证</span>
+                    </a>
+                </li>
+                <li class="nav-label">训练</li>
+                <li>
+                    <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <i class="icon-graph menu-icon"></i> <span class="nav-text">训练</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ url_for('train')}}">新建训练</a></li>
+                        <li><a href="{{ url_for('datalist')}}">数据源</a></li>
+                        <li><a href="{{ url_for('dashboard')}}">控制面板</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--**********************************
+        Sidebar end
+    ***********************************-->
+
+    <!--**********************************
+        Content body start
+    ***********************************-->
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Validate</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h3>验证</h3>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="example text-center">
+                                        <h5 class="box-title m-t-30">1. 选择一个check point</h5>
+                                        <p class="text-muted m-b-20">显示最优先5个check point.请<code>选择</code>其中一个!</p>
+                                        <div class="basic-list-group">
+                                            <div class="list-group" id="list_tab_ckpt" role="tablist">
+                                                <a class="list-group-item list-group-item-action active show"
+                                                   id="list-home-list" data-toggle="list" href="#list-home" role="tab"
+                                                   aria-controls="home" aria-selected="true">ckpt1</a>
+                                                <a class="list-group-item list-group-item-action" id="list-profile-list"
+                                                   data-toggle="list" href="#list-profile" role="tab"
+                                                   aria-controls="profile" aria-selected="false">ckpt2</a>
+                                                <a class="list-group-item list-group-item-action"
+                                                   id="list-messages-list"
+                                                   data-toggle="list" href="#list-messages" role="tab"
+                                                   aria-controls="messages" aria-selected="false">ckpt3</a>
+                                                <a class="list-group-item list- group-item-action"
+                                                   id="list-ss-list"
+                                                   data-toggle="list" href="#list-settings" role="tab"
+                                                   aria-controls="settings">ckpt4</a>
+                                                <a class="list-group-item list-group-item-action"
+                                                   id="list-dd-list"
+                                                   data-toggle="list" href="#list-settings" role="tab"
+                                                   aria-controls="settings">ckpt5</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <h5 class="box-title m-t-30">2. 上传图片</h5>
+                                        <p class="text-muted m-b-20">请上传一张需要分析的图片.<code>点击上传后会自动开始分析</code>并显示结果在3!</p>
+                                        <div class="form-group">
+                                            <input name="photo" id="validateImageInput" type="file" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="text-center">
+                                        <h5 class="box-title m-t-30">3. 验证结果</h5>
+                                        <p class="text-muted m-b-20">下面会显示验证结果.
+                                        </p>
+                                        <div class="progress" style="height: 9px">
+                                            <div class="progress-bar bg-success" style="width: 75%;" role="progressbar">
+                                                75%
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" placeholder="验证结果验证结果验证结果"
+                                                   readonly="readonly">
+                                            <!--                                            <h4 class="card-title">验证结果验证结果验证结果</h4>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #/ container -->
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
+
+
+<!--**********************************
+    Footer start
+***********************************-->
+<div class="footer">
+    <div class="copyright">
+        <p>2020 Copyright &copy; Designed & Developed by 380&369 team, Algorithms: <a href="#">SDC</a>, Back-end: <a
+                href="#">HYL</a>, Front-end: <a href="#">Hly</a></p>
+    </div>
+</div>
+<!--**********************************
+    Footer end
+***********************************-->
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+<!--<script type="text/javascript" src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>-->
+
+<script src="{{ url_for('static', filename='quix/plugins/common/common.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/custom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/settings.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/gleek.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/styleSwitcher.js') }}"></script>
+<!--&lt;!&ndash; Chartjs &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chart.js/Chart.bundle.min.js') }}"></script>-->
+<!--&lt;!&ndash; Circle progress &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/circle-progress/circle-progress.min.js') }}"></script>-->
+<!--&lt;!&ndash; Datamap &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/d3v3/index.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/topojson/topojson.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/datamaps/datamaps.world.min.js') }}"></script>-->
+<!--&lt;!&ndash; Morrisjs &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/raphael/raphael.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/morris/morris.min.js') }}"></script>-->
+<!--&lt;!&ndash; Pignose Calender &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/moment/moment.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/pg-calendar/js/pignose.calendar.min.js') }}"></script>-->
+<!--&lt;!&ndash; ChartistJS &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chartist/js/chartist.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>-->
+
+
+<!--<script src="{{ url_for('static', filename='quix/js/dashboard/dashboard-1.js') }}"></script>-->
+
+<!--<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/hwr.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/plugins/piexif.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/plugins/purify.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/fileinput.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/locales/zh.js') }}"></script>
+
+<!-- Toastr -->
+<script src="{{ url_for('static', filename='quix/plugins/toastr/js/toastr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/plugins/toastr/js/toastr.init.js') }}"></script>
+
+<script type="text/javascript">
+    $(function () {
+        console.log("js init");
+
+         toastr.options = {
+            timeOut: 5e3,
+            closeButton: !0,
+            debug: !1,
+            newestOnTop: !0,
+            progressBar: !0,
+            positionClass: "toast-bottom-right",
+            preventDuplicates: !0,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: !1
+
+        };
+
+        $("#validateImageInput").fileinput({
+            uploadUrl: "up_photo",  //还写具体上传地址才显示可拖拽区域
+            language: 'zh', //设置语言
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            uploadAsync: false, //默认异步上传
+            browseIcon: '<i class="fa fa-folder-open"></i>&nbsp;',
+            browseClass: "btn mb-1 btn-info", //按钮样式
+            removeIcon: '<i class="fa fa-trash"></i>',
+            removeClass: 'btn mb-1 btn-flat btn-danger',
+            cancelIcon: '<i class="fa fa-ban"></i>',
+            cancelClass: 'btn mb-1 btn-info',
+            pauseIcon: '<i class="fa fa-pause-circle"></i>',
+            pauseClass: 'btn mb-1 btn-info',
+            uploadIcon: '<i class="fa fa-upload"></i>',
+            uploadClass: 'btn mb-1 btn-info',
+            previewZoomButtonIcons: {
+                prev: '<i class="fa fa-caret-left"></i>',
+                next: '<i class="fa fa-caret-right"></i>',
+                toggleheader: '<i class="fa fa-arrows-v"></i>',
+                fullscreen: '<i class="fa fa-arrows-alt"></i>',
+                borderless: '<i class="fa fa-expand"></i>',
+                close: '<i class="fa fa-times"></i>'
+            },
+            previewZoomButtonClasses: {
+                prev: 'btn btn-navigate',
+                next: 'btn btn-navigate',
+                toggleheader: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                fullscreen: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                borderless: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                close: 'btn btn-sm btn-kv btn-default btn-outline-secondary'
+            },
+            fileActionSettings: {
+                removeIcon: '<i class="fa fa-trash"></i>',
+                removeClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                removeErrorClass: 'btn btn-sm btn-kv btn-danger',
+                removeTitle: 'Remove file',
+                uploadIcon: '<i class="fa fa-upload"></i>',
+                uploadClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                uploadTitle: 'Upload file',
+                uploadRetryIcon: '<i class="fa fa-repeat"></i>',
+                uploadRetryTitle: 'Retry upload',
+                downloadIcon: '<i class="fa fa-arrow-circle-down"></i>',
+                downloadClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                downloadTitle: 'Download file',
+                zoomIcon: '<i class="fa fa-search-plus"></i>',
+                zoomClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                zoomTitle: 'View Details',
+                dragIcon: '<i class="fa fa-arrows"></i>',
+                dragClass: 'text-info',
+                dragTitle: 'Move / Rearrange',
+                dragSettings: {},
+                indicatorNew: '<i class="fa fa-plus-circle text-warning"></i>',
+                indicatorSuccess: '<i class="fa fa-check-circle text-success"></i>',
+                indicatorError: '<i class="fa fa-exclamation-circle text-danger"></i>',
+                indicatorLoading: '<i class="fa fa-hourglass-half text-muted"></i>',
+                indicatorPaused: '<i class="fa fa-pause text-primary"></i>',
+            },
+            autoReplace: true,
+            maxFileCount: 1, //表示允许同时上传的最大文件个数
+            maxTotalFileCount: 0,
+            enctype: 'multipart/form-data',
+            maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+            // minImageWidth: 500, //图片的最小宽度
+            // minImageHeight: 500,//图片的最小高度
+            // maxImageWidth: 2500,//图片的最大宽度
+            // maxImageHeight: 4000,//图片的最大高度
+            resizeImage: false,
+            resizePreference: 'width',
+            showUpload: true, //是否显示上传按钮
+            showRemove: true, //显示移除按钮
+            showPreview: true, //是否显示预览
+            previewFileType: ['jpg', 'gif', 'png', 'jpeg'],
+            showCaption: true,//是否显示长条标题
+            dropZoneEnabled: false,//是否显示拖拽区域
+            // autoReplace: true,
+            // msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            msgAjaxError: 'Something went wrong with the {operation} operation. Please try again later!', //错误提示
+            // uploadExtraData: {"destination": "blogsss"},//上传携带参数
+            uploadExtraData: function () {
+                console.log("uploadExtraData");
+                let ckpt = $("#list_tab_ckpt").find('a[class*=active]').text();
+                console.log(ckpt);
+                return {'ckpt': ckpt};
+            }
+        }).on("filepreupload", function (event, files) {  //选中要上传的文件后回调
+            // $(this).fileinput("upload");  //自动上传
+
+        }).on("filebatchuploadcomplete", function (event, data) {
+            toastr.success("数据上传成功!", "Validate");
+            if (data.response) {
+                console.log("处理成功!");
+                console.log(data.response);
+            }
+        }).on("fileuploaderror", function (event, data) {
+            toastr.error("数据上传错误,"+data.response, "Validate");
+        });
+
+    });
+
+</script>
+</body>
+
+</html>

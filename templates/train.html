@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HWR</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='quix/images/favicon.png') }}">
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-3.3.7-dist/css/bootstrap.css') }}">-->
+    <!--    <link href="{{ url_for('static', filename='lib/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">-->
+
+    <!--    &lt;!&ndash; Pignose Calender &ndash;&gt;-->
+    <!--    <link href="{{ url_for('static', filename='quix/plugins/pg-calendar/css/pignose.calendar.min.css') }}"-->
+    <!--          rel="stylesheet">-->
+    <!--    &lt;!&ndash; Chartist &ndash;&gt;-->
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='quix/plugins/chartist/css/chartist.min.css') }}">-->
+    <!--    <link rel="stylesheet"-->
+    <!--          href="{{ url_for('static', filename='quix/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">-->
+    <!-- Custom Stylesheet -->
+    <!--      <link href="{{ url_for('static', filename='lib/glyphicons/css/bootstrap.css') }}" rel="stylesheet">-->
+    <link href="{{ url_for('static', filename='quix/plugins/toastr/css/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='quix/css/style.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='lib/fileinput/css/fileinput.min.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+    <!--**********************************
+        Nav header start
+    ***********************************-->
+    <div class="nav-header">
+        <div class="brand-logo">
+            <a href="index.html">
+                <b class="logo-abbr"><img src="{{ url_for('static', filename='quix/images/logo.png') }}" alt=""> </b>
+                <span class="logo-compact"><img src="{{ url_for('static', filename='quix/images/logo-compact.png') }}"
+                                                alt=""></span>
+                <span class="brand-title">
+
+                        <img src="{{ url_for('static', filename='quix/images/logo-text.png') }}" alt="">
+                    </span>
+            </a>
+        </div>
+    </div>
+    <!--**********************************
+        Nav header end
+    ***********************************-->
+
+    <!--**********************************
+        Header start
+    ***********************************-->
+    <div class="header">
+        <div class="header-content clearfix">
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="toggle-icon"><i class="icon-menu"></i></span>
+                </div>
+            </div>
+            <div class="header-left">
+            </div>
+            <div class="header-right">
+
+            </div>
+        </div>
+    </div>
+    <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+    <!--**********************************
+        Sidebar start
+    ***********************************-->
+    <div class="nk-sidebar">
+        <div class="nk-nav-scroll">
+            <ul class="metismenu" id="menu">
+                <li class="nav-label">验证</li>
+                <li>
+                    <a href="{{ url_for('main')}}" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">验证</span>
+                    </a>
+                </li>
+                <li class="nav-label">训练</li>
+                <li class="active">
+                    <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <i class="icon-graph menu-icon"></i> <span class="nav-text">训练</span>
+                    </a>
+                    <ul aria-expanded="true" class="collapse in">
+                        <li class="active"><a href="javascript:void(0)" class="active">新建训练</a></li>
+                        <li><a href="{{ url_for('datalist')}}">数据源</a></li>
+                        <li><a href="{{ url_for('dashboard')}}">控制面板</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--**********************************
+        Sidebar end
+    ***********************************-->
+
+    <!--**********************************
+        Content body start
+    ***********************************-->
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Train</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">StartTrain</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h3>新建训练</h3>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="example text-center">
+                                        <h5 class="box-title m-t-30">1. 选择一个数据源</h5>
+                                        <p class="text-muted m-b-20">请选择一个数据源,若没有合适的数据源,请前往<code>数据源</code>页面,新建/修改数据源!
+                                        </p>
+                                    </div>
+                                    <div class="input-group">
+                                        <select id="dataSourceSelector" class="custom-select">
+                                            <option value="" selected="selected">Choose...</option>
+                                            <option value="1">DataSource1</option>
+                                            <option value="2">DataSource2</option>
+                                            <option value="3">DataSource3</option>
+                                            <option value="4">DataSource4</option>
+                                            <option value="5">DataSource5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="example text-center">
+                                        <h5 class="box-title m-t-30">2. 选择一个check point</h5>
+                                        <p class="text-muted m-b-20">可以选择一个ckpt开始训练,如无需要,<code>可忽略(新开始)</code>!
+                                        </p>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Status</th>
+                                                <th>Date</th>
+                                                <th>Price</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <th><input type="checkbox" id="chk1"></th>
+                                                <td>Kolor Tea Shirt For Man</td>
+                                                <td><span class="badge badge-primary px-2">Sale</span>
+                                                </td>
+                                                <td>January 22</td>
+                                                <td class="color-primary">$21.56</td>
+                                            </tr>
+                                            <tr>
+                                                <th><input type="checkbox" id="chk2"></th>
+                                                <td>Kolor Tea Shirt For Women</td>
+                                                <td><span class="badge badge-danger px-2">Tax</span>
+                                                </td>
+                                                <td>January 30</td>
+                                                <td class="color-success">$55.32</td>
+                                            </tr>
+                                            <tr>
+                                                <th>3</th>
+                                                <td>Blue Backpack For Baby</td>
+                                                <td><span class="badge badge-success px-2">Extended</span>
+                                                </td>
+                                                <td>January 25</td>
+                                                <td class="color-danger">$14.85</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div class="text-left">1 - 20 of 568</div>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="btn-group float-right">
+                                                <button class="btn btn-gradient" type="button"><i
+                                                        class="fa fa-angle-left"></i>
+                                                </button>
+                                                <button class="btn btn-dark" type="button"><i
+                                                        class="fa fa-angle-right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button type="button" id="startTrainBtn" class="btn mb-1 btn-success"
+                                        style="margin: 0 auto 0 auto">开始训练
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #/ container -->
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
+
+
+<!--**********************************
+    Footer start
+***********************************-->
+<div class="footer">
+    <div class="copyright">
+        <p>2020 Copyright &copy; Designed & Developed by 380&369 team, Algorithms: <a href="#">SDC</a>, Back-end: <a
+                href="#">HYL</a>, Front-end: <a href="#">Hly</a></p>
+    </div>
+</div>
+<!--**********************************
+    Footer end
+***********************************-->
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+<!--<script type="text/javascript" src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>-->
+
+<script src="{{ url_for('static', filename='quix/plugins/common/common.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/custom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/settings.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/gleek.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/styleSwitcher.js') }}"></script>
+<!--&lt;!&ndash; Chartjs &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chart.js/Chart.bundle.min.js') }}"></script>-->
+<!--&lt;!&ndash; Circle progress &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/circle-progress/circle-progress.min.js') }}"></script>-->
+<!--&lt;!&ndash; Datamap &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/d3v3/index.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/topojson/topojson.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/datamaps/datamaps.world.min.js') }}"></script>-->
+<!--&lt;!&ndash; Morrisjs &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/raphael/raphael.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/morris/morris.min.js') }}"></script>-->
+<!--&lt;!&ndash; Pignose Calender &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/moment/moment.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/pg-calendar/js/pignose.calendar.min.js') }}"></script>-->
+<!--&lt;!&ndash; ChartistJS &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chartist/js/chartist.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>-->
+
+
+<!--<script src="{{ url_for('static', filename='quix/js/dashboard/dashboard-1.js') }}"></script>-->
+
+<!--<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>-->
+<script src="{{ url_for('static', filename='js/hwr.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/plugins/piexif.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/plugins/purify.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/fileinput.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/locales/zh.js') }}"></script>
+
+<!-- Toastr -->
+<script src="{{ url_for('static', filename='quix/plugins/toastr/js/toastr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/plugins/toastr/js/toastr.init.js') }}"></script>
+
+<script type="text/javascript">
+    $(function () {
+        console.log("js init");
+
+        toastr.options = {
+            timeOut: 5e3,
+            closeButton: !0,
+            debug: !1,
+            newestOnTop: !0,
+            progressBar: !0,
+            positionClass: "toast-bottom-right",
+            preventDuplicates: !0,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: !1
+
+        };
+
+        $("#validateImageInput").fileinput({
+            uploadUrl: "up_photo",  //还写具体上传地址才显示可拖拽区域
+            language: 'zh', //设置语言
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            uploadAsync: false, //默认异步上传
+            browseIcon: '<i class="fa fa-folder-open"></i>&nbsp;',
+            browseClass: "btn mb-1 btn-info", //按钮样式
+            removeIcon: '<i class="fa fa-trash"></i>',
+            removeClass: 'btn mb-1 btn-flat btn-danger',
+            cancelIcon: '<i class="fa fa-ban"></i>',
+            cancelClass: 'btn mb-1 btn-info',
+            pauseIcon: '<i class="fa fa-pause-circle"></i>',
+            pauseClass: 'btn mb-1 btn-info',
+            uploadIcon: '<i class="fa fa-upload"></i>',
+            uploadClass: 'btn mb-1 btn-info',
+            previewZoomButtonIcons: {
+                prev: '<i class="fa fa-caret-left"></i>',
+                next: '<i class="fa fa-caret-right"></i>',
+                toggleheader: '<i class="fa fa-arrows-v"></i>',
+                fullscreen: '<i class="fa fa-arrows-alt"></i>',
+                borderless: '<i class="fa fa-expand"></i>',
+                close: '<i class="fa fa-times"></i>'
+            },
+            previewZoomButtonClasses: {
+                prev: 'btn btn-navigate',
+                next: 'btn btn-navigate',
+                toggleheader: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                fullscreen: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                borderless: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                close: 'btn btn-sm btn-kv btn-default btn-outline-secondary'
+            },
+            fileActionSettings: {
+                removeIcon: '<i class="fa fa-trash"></i>',
+                removeClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                removeErrorClass: 'btn btn-sm btn-kv btn-danger',
+                removeTitle: 'Remove file',
+                uploadIcon: '<i class="fa fa-upload"></i>',
+                uploadClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                uploadTitle: 'Upload file',
+                uploadRetryIcon: '<i class="fa fa-repeat"></i>',
+                uploadRetryTitle: 'Retry upload',
+                downloadIcon: '<i class="fa fa-arrow-circle-down"></i>',
+                downloadClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                downloadTitle: 'Download file',
+                zoomIcon: '<i class="fa fa-search-plus"></i>',
+                zoomClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                zoomTitle: 'View Details',
+                dragIcon: '<i class="fa fa-arrows"></i>',
+                dragClass: 'text-info',
+                dragTitle: 'Move / Rearrange',
+                dragSettings: {},
+                indicatorNew: '<i class="fa fa-plus-circle text-warning"></i>',
+                indicatorSuccess: '<i class="fa fa-check-circle text-success"></i>',
+                indicatorError: '<i class="fa fa-exclamation-circle text-danger"></i>',
+                indicatorLoading: '<i class="fa fa-hourglass-half text-muted"></i>',
+                indicatorPaused: '<i class="fa fa-pause text-primary"></i>',
+            },
+            autoReplace: true,
+            maxFileCount: 1, //表示允许同时上传的最大文件个数
+            maxTotalFileCount: 0,
+            enctype: 'multipart/form-data',
+            maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+            // minImageWidth: 500, //图片的最小宽度
+            // minImageHeight: 500,//图片的最小高度
+            // maxImageWidth: 2500,//图片的最大宽度
+            // maxImageHeight: 4000,//图片的最大高度
+            resizeImage: false,
+            resizePreference: 'width',
+            showUpload: true, //是否显示上传按钮
+            showRemove: true, //显示移除按钮
+            showPreview: true, //是否显示预览
+            previewFileType: ['jpg', 'gif', 'png', 'jpeg'],
+            showCaption: true,//是否显示长条标题
+            dropZoneEnabled: false,//是否显示拖拽区域
+            // autoReplace: true,
+            // msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            msgAjaxError: 'Something went wrong with the {operation} operation. Please try again later!', //错误提示
+            // uploadExtraData: {"destination": "blogsss"},//上传携带参数
+            uploadExtraData: function () {
+                console.log("uploadExtraData");
+                let ckpt = $("#list_tab_ckpt").find('a[class*=active]').text();
+                console.log(ckpt);
+                return {'ckpt': ckpt};
+            }
+        }).on("filepreupload", function (event, files) {  //选中要上传的文件后回调
+            // $(this).fileinput("upload");  //自动上传
+
+        }).on("filebatchuploadcomplete", function (event, data) {
+            toastr.success("数据上传成功!", "Validate");
+            if (data.response) {
+                console.log("处理成功!");
+                console.log(data.response);
+            }
+        }).on("fileuploaderror", function (event, data) {
+            toastr.error("数据上传错误," + data.response, "Train");
+        });
+
+
+    });
+
+    function checkIsNullOrEmpty(value) {
+        //正则表达式用于判斷字符串是否全部由空格或换行符组成
+        var reg = /^\s*$/;
+        //返回值为true表示不是空字符串
+        return (value != null && value != undefined && !reg.test(value))
+    }
+
+    $('#startTrainBtn').click(function () {
+        let dataSourceId = $('#dataSourceSelector').val();
+        console.log(dataSourceId);
+        if (checkIsNullOrEmpty(dataSourceId)) {
+            let ckptId = -1;
+            let map = {
+                'dataSourceId':dataSourceId,
+                'ckptId':ckptId
+            };
+            $.ajax({
+                url: "/start_train",
+                type: 'POST',
+                dataType:'json',
+                data: {'dataSourceId':dataSourceId,'ckptId':ckptId},
+                success: function (result) {
+                    toastr.success("开始训练!", result.msg);
+                },
+                error: function (result) {
+                    toastr.error("出现错误!", "Ajax出错!");
+                }
+            });
+
+        } else {
+            toastr.warning("请选择一个数据源!", "Train");
+        }
+    });
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HWR | Data</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='quix/images/favicon.png') }}">
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-3.3.7-dist/css/bootstrap.css') }}">-->
+    <!--    <link href="{{ url_for('static', filename='lib/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">-->
+
+    <!--    &lt;!&ndash; Pignose Calender &ndash;&gt;-->
+    <!--    <link href="{{ url_for('static', filename='quix/plugins/pg-calendar/css/pignose.calendar.min.css') }}"-->
+    <!--          rel="stylesheet">-->
+    <!--    &lt;!&ndash; Chartist &ndash;&gt;-->
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='quix/plugins/chartist/css/chartist.min.css') }}">-->
+    <!--    <link rel="stylesheet"-->
+    <!--          href="{{ url_for('static', filename='quix/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">-->
+    <!-- Custom Stylesheet -->
+    <!--      <link href="{{ url_for('static', filename='lib/glyphicons/css/bootstrap.css') }}" rel="stylesheet">-->
+
+    <!-- Sweetalert Stylesheet -->
+    <link href="{{ url_for('static', filename='quix/plugins/sweetalert/css/sweetalert.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='quix/plugins/toastr/css/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='quix/css/style.css') }}" rel="stylesheet">
+
+    <!--    <link href="{{ url_for('static', filename='lib/fileinput/css/fileinput.min.css') }}" rel="stylesheet">-->
+
+</head>
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+    <!--**********************************
+        Nav header start
+    ***********************************-->
+    <div class="nav-header">
+        <div class="brand-logo">
+            <a href="index.html">
+                <b class="logo-abbr"><img src="{{ url_for('static', filename='quix/images/logo.png') }}" alt=""> </b>
+                <span class="logo-compact"><img src="{{ url_for('static', filename='quix/images/logo-compact.png') }}"
+                                                alt=""></span>
+                <span class="brand-title">
+
+                        <img src="{{ url_for('static', filename='quix/images/logo-text.png') }}" alt="">
+                    </span>
+            </a>
+        </div>
+    </div>
+    <!--**********************************
+        Nav header end
+    ***********************************-->
+
+    <!--**********************************
+        Header start
+    ***********************************-->
+    <div class="header">
+        <div class="header-content clearfix">
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="toggle-icon"><i class="icon-menu"></i></span>
+                </div>
+            </div>
+            <div class="header-left">
+            </div>
+            <div class="header-right">
+
+            </div>
+        </div>
+    </div>
+    <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+    <!--**********************************
+        Sidebar start
+    ***********************************-->
+    <div class="nk-sidebar">
+        <div class="nk-nav-scroll">
+            <ul class="metismenu" id="menu">
+                <li class="nav-label">验证</li>
+                <li>
+                    <a href="{{ url_for('main')}}" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">验证</span>
+                    </a>
+                </li>
+                <li class="nav-label">训练</li>
+                <li class="active">
+                    <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <i class="icon-graph menu-icon"></i> <span class="nav-text">训练</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ url_for('train')}}">新建训练</a></li>
+                        <li><a href="{{ url_for('datalist')}}">数据源</a></li>
+                        <li><a href="{{ url_for('dashboard')}}">控制面板</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--**********************************
+        Sidebar end
+    ***********************************-->
+
+    <!--**********************************
+        Content body start
+    ***********************************-->
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('datalist')}}">Train</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('datalist')}}">Datalist</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">DS xxx</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 m-b-30">
+                    <h4 class="d-inline">DataSource xxx</h4>
+                    <p class="text-muted">共xxx条数据 | 最近更新时间xxxx/xx/xx</p>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card">
+                                <img class="img-fluid"
+                                     src="{{ url_for('static', filename='quix/images/big/img1.jpg') }}" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-title">Data 1</h5>
+                                    <p class="card-text">Label:xxx</p>
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins
+                                                ago</small></p>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='1' class="dropdown-item dataModifyBtn">修改</a>
+                                                    <a name='1' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card">
+                                <img class="img-fluid"
+                                     src="{{ url_for('static', filename='quix/images/big/img2.jpg') }}" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-title">Data 2</h5>
+                                    <p class="card-text">Label:xxx</p>
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins
+                                                ago</small></p>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='2' class="dropdown-item dataModifyBtn">修改</a>
+                                                    <a name='2' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card">
+                                <img class="img-fluid"
+                                     src="{{ url_for('static', filename='quix/images/big/img3.jpg') }}" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-title">Data 3</h5>
+                                    <p class="card-text">Label:xxx</p>
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins
+                                                ago</small></p>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='3' class="dropdown-item dataModifyBtn">修改</a>
+                                                    <a name='3' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card">
+                                <img class="img-fluid"
+                                     src="{{ url_for('static', filename='quix/images/big/img4.jpg') }}" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-title">Data 4</h5>
+                                    <p class="card-text">Label:xxx</p>
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins
+                                                ago</small></p>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='4' class="dropdown-item dataModifyBtn">修改</a>
+                                                    <a name='4' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card">
+                                <img class="img-fluid"
+                                     src="{{ url_for('static', filename='quix/images/big/img1.jpg') }}" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-title">Data 5</h5>
+                                    <p class="card-text">Label:xxx</p>
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins
+                                                ago</small></p>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='5' class="dropdown-item dataModifyBtn">修改</a>
+                                                    <a name='5' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card">
+                                <img class="img-fluid"
+                                     src="{{ url_for('static', filename='quix/images/big/img2.jpg') }}" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-title">Data 6</h5>
+                                    <p class="card-text">Label:xxx</p>
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins
+                                                ago</small></p>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='6' class="dropdown-item dataModifyBtn">修改</a>
+                                                    <a name='6' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card">
+                                <img class="img-fluid"
+                                     src="{{ url_for('static', filename='quix/images/big/img3.jpg') }}" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-title">Data 7</h5>
+                                    <p class="card-text">Label:xxx</p>
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins
+                                                ago</small></p>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='7' class="dropdown-item dataModifyBtn">修改</a>
+                                                    <a name='7' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- #/ container -->
+    <!--Modal --- modify -->
+    <div class="modal fade" id="dataModifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dataModifyModalTitle">数据Id:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="dataModifyModalForm">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Label</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="dataModalLabel" placeholder="请输入Label">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="dataModifyModalSaveBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
+
+
+<!--**********************************
+    Footer start
+***********************************-->
+<div class="footer">
+    <div class="copyright">
+        <p>2020 Copyright &copy; Designed & Developed by 380&369 team, Algorithms: <a href="#">SDC</a>, Back-end: <a
+                href="#">HYL</a>, Front-end: <a href="#">Hly</a></p>
+    </div>
+</div>
+<!--**********************************
+    Footer end
+***********************************-->
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+<!--<script type="text/javascript" src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>-->
+
+<script src="{{ url_for('static', filename='quix/plugins/common/common.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/custom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/settings.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/gleek.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/styleSwitcher.js') }}"></script>
+<!--&lt;!&ndash; Chartjs &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chart.js/Chart.bundle.min.js') }}"></script>-->
+<!--&lt;!&ndash; Circle progress &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/circle-progress/circle-progress.min.js') }}"></script>-->
+<!--&lt;!&ndash; Datamap &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/d3v3/index.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/topojson/topojson.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/datamaps/datamaps.world.min.js') }}"></script>-->
+<!--&lt;!&ndash; Morrisjs &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/raphael/raphael.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/morris/morris.min.js') }}"></script>-->
+<!--&lt;!&ndash; Pignose Calender &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/moment/moment.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/pg-calendar/js/pignose.calendar.min.js') }}"></script>-->
+<!--&lt;!&ndash; ChartistJS &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chartist/js/chartist.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>-->
+
+
+<!--<script src="{{ url_for('static', filename='quix/js/dashboard/dashboard-1.js') }}"></script>-->
+
+<!--<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>-->
+<!--{{ url_for('static', filename='js/hwr.js') }}-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/hwr.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/plugins/piexif.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/plugins/purify.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/fileinput.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/locales/zh.js') }}"></script>
+
+<!-- Toastr -->
+<script src="{{ url_for('static', filename='quix/plugins/toastr/js/toastr.min.js') }}"></script>
+<!--<script src="{{ url_for('static', filename='quix/plugins/toastr/js/toastr.init.js') }}"></script>-->
+
+<!-- Sweetalert -->
+<script src="{{ url_for('static', filename='quix/plugins/sweetalert/js/sweetalert.min.js') }}"></script>
+<!--    <script src="./plugins/sweetalert/js/sweetalert.init.js"></script>-->
+
+<script type="text/javascript">
+    // function raiseModifyDataModal(id) {
+    //     $('#dataModifyModal').find('#dataModifyModalTitle').empty().append('数据Id: ' + id);
+    //     $('#dataModifyModal').modal('show');
+    // }
+
+    $(function () {
+        console.log("js init");
+        let modify_btn_list = document.getElementsByClassName("dataModifyBtn");
+        let delete_btn_list = document.getElementsByClassName("sweet-confirm");
+        console.log(modify_btn_list.length);
+
+        if (checkIsNullOrEmpty(modify_btn_list)) {
+            for (var i = 0; i < modify_btn_list.length; i++) {
+                modify_btn_list[i].onclick = function () {
+                    let id = this.getAttribute('name');
+                    console.log(id);
+                    $('#dataModifyModal').find('#dataModifyModalTitle').empty().append('数据Id: ' + id);
+                    $('#dataModifyModal').modal('show');
+                }
+            }
+        }
+
+        if (checkIsNullOrEmpty(delete_btn_list)) {
+            for (var i = 0; i < delete_btn_list.length; i++) {
+                delete_btn_list[i].onclick = function () {
+                    let id = this.getAttribute('name');
+                    console.log(id);
+                    swal({
+                        title: "确定删除数据:" + id + " 吗 ?",
+                        text: "删除后就不可恢复 !!",
+                        type: "warning",
+                        showCancelButton: !0,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确定, 删除它 !!",
+                        closeOnConfirm: !1
+                    }, function () {
+                        swal("已删除 !!", "Hey, 已删除数据:" + id + " !!", "success")
+                    });
+                }
+            }
+        }
+        // document.querySelectorAll(".sweet-confirm").onclick = function () {
+        //     let id = this.getAttribute('name');
+        //     console.log(id);
+        //     swal({
+        //         title: "确定删除数据:" + id + " 吗 ?",
+        //         text: "删除后就不可恢复 !!",
+        //         type: "warning",
+        //         showCancelButton: !0,
+        //         confirmButtonColor: "#DD6B55",
+        //         confirmButtonText: "确定, 删除它 !!",
+        //         closeOnConfirm: !1
+        //     }, function () {
+        //         swal("已删除 !!", "Hey, 已删除数据:" + id + " !!", "success")
+        //     })
+        // }
+
+    });
+
+</script>
+</body>
+
+</html>

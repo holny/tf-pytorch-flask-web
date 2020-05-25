@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HWR | Data</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='quix/images/favicon.png') }}">
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-3.3.7-dist/css/bootstrap.css') }}">-->
+    <!--    <link href="{{ url_for('static', filename='lib/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">-->
+
+    <!--    &lt;!&ndash; Pignose Calender &ndash;&gt;-->
+    <!--    <link href="{{ url_for('static', filename='quix/plugins/pg-calendar/css/pignose.calendar.min.css') }}"-->
+    <!--          rel="stylesheet">-->
+    <!--    &lt;!&ndash; Chartist &ndash;&gt;-->
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='quix/plugins/chartist/css/chartist.min.css') }}">-->
+    <!--    <link rel="stylesheet"-->
+    <!--          href="{{ url_for('static', filename='quix/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">-->
+    <!-- Custom Stylesheet -->
+    <!--      <link href="{{ url_for('static', filename='lib/glyphicons/css/bootstrap.css') }}" rel="stylesheet">-->
+
+    <!-- Sweetalert Stylesheet -->
+    <link href="{{ url_for('static', filename='quix/plugins/sweetalert/css/sweetalert.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='quix/plugins/toastr/css/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='quix/css/style.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='lib/fileinput/css/fileinput.min.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+    <!--**********************************
+        Nav header start
+    ***********************************-->
+    <div class="nav-header">
+        <div class="brand-logo">
+            <a href="index.html">
+                <b class="logo-abbr"><img src="{{ url_for('static', filename='quix/images/logo.png') }}" alt=""> </b>
+                <span class="logo-compact"><img src="{{ url_for('static', filename='quix/images/logo-compact.png') }}"
+                                                alt=""></span>
+                <span class="brand-title">
+
+                        <img src="{{ url_for('static', filename='quix/images/logo-text.png') }}" alt="">
+                    </span>
+            </a>
+        </div>
+    </div>
+    <!--**********************************
+        Nav header end
+    ***********************************-->
+
+    <!--**********************************
+        Header start
+    ***********************************-->
+    <div class="header">
+        <div class="header-content clearfix">
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="toggle-icon"><i class="icon-menu"></i></span>
+                </div>
+            </div>
+            <div class="header-left">
+            </div>
+            <div class="header-right">
+
+            </div>
+        </div>
+    </div>
+    <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+    <!--**********************************
+        Sidebar start
+    ***********************************-->
+    <div class="nk-sidebar">
+        <div class="nk-nav-scroll">
+            <ul class="metismenu" id="menu">
+                <li class="nav-label">验证</li>
+                <li>
+                    <a href="{{ url_for('main')}}" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">验证</span>
+                    </a>
+                </li>
+                <li class="nav-label">训练</li>
+                <li class="active">
+                    <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <i class="icon-graph menu-icon"></i> <span class="nav-text">训练</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse in">
+                        <li><a href="{{ url_for('train')}}">新建训练</a></li>
+                        <li class="active"><a href="javascript:void(0)" class="active">数据源</a></li>
+                        <li><a href="{{ url_for('dashboard')}}">控制面板</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--**********************************
+        Sidebar end
+    ***********************************-->
+
+    <!--**********************************
+        Content body start
+    ***********************************-->
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Train</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Datalist</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h3>新建/添加数据源</h3>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="example text-center">
+                                        <h5 class="box-title m-t-30">1. 选择数据源集</h5>
+                                        <p class="text-muted m-b-20">选择一个数据源集.也可新建一个数据源集!</p>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-dark" type="button" data-toggle="modal"
+                                                        data-target="#newDataSourceModal">新建一个数据源集
+                                                </button>
+                                            </div>
+                                            <select id="dataSourceSelector" class="custom-select">
+                                                <option selected="selected">Choose...</option>
+                                                <option value="1">DataSource1</option>
+                                                <option value="2">DataSource2</option>
+                                                <option value="3">DataSource3</option>
+                                                <option value="4">DataSource4</option>
+                                                <option value="5">DataSource5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <h5 class="box-title m-t-30">2. 上传数据</h5>
+                                        <p class="text-muted m-b-20">请上传数据到已选数据源集.<code>可批量上传</code>!</p>
+                                        <div class="form-group">
+                                            <input name="upData" id="trainImageInput" type="file" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <h4 class="d-inline">已有数据源</h4>
+                    <p class="text-muted">This is 3 column contents</p>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <h4 class="card-title"><a href="{{ url_for('dataSource',dataSourceId=1)}}">DataSource 1</a></h4>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='1' class="dropdown-item dsModifyBtn">修改</a>
+                                                    <a name='1' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bootstrap-carousel">
+                                        <div id="carouselExampleIndicators1" class="carousel slide"
+                                             data-ride="carousel">
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#carouselExampleIndicators1" data-slide-to="0"
+                                                    class="active"></li>
+                                                <li data-target="#carouselExampleIndicators1" data-slide-to="1"
+                                                    class=""></li>
+                                                <li data-target="#carouselExampleIndicators1" data-slide-to="2"
+                                                    class=""></li>
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                    <img class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}"
+                                                         alt="First slide">
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img6.jpg') }}"
+                                                         alt="Second slide">
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}"
+                                                         alt="Third slide">
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleIndicators1"
+                                               data-slide="prev"><span class="carousel-control-prev-icon"></span> <span
+                                                    class="sr-only">Previous</span> </a><a class="carousel-control-next"
+                                                                                           href="#carouselExampleIndicators1"
+                                                                                           data-slide="next"><span
+                                                class="carousel-control-next-icon"></span> <span
+                                                class="sr-only">Next</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <h4 class="card-title"><a href="{{ url_for('dataSource',dataSourceId=2)}}">DataSource 2</a></h4>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='2' class="dropdown-item dsModifyBtn">修改</a>
+                                                    <a name='2' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bootstrap-carousel">
+                                        <div data-ride="carousel" class="carousel slide" id="carouselExampleCaptions2">
+                                            <ol class="carousel-indicators">
+                                                <li class="" data-slide-to="0"
+                                                    data-target="#carouselExampleCaptions"></li>
+                                                <li data-slide-to="1" data-target="#carouselExampleCaptions2"
+                                                    class="active"></li>
+                                                <li data-slide-to="2" data-target="#carouselExampleCaptions2"
+                                                    class=""></li>
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}"
+                                                         alt="">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5>First slide label</h5>
+                                                        <p>Nulla vitae elit libero, a pharetra augue mollis
+                                                            interdum.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item active">
+                                                    <img alt="" class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img6.jpg') }}">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5>Second slide label</h5>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img alt="" class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5>Third slide label</h5>
+                                                        <p>Praesent commodo cursus magna, vel scelerisque nisl
+                                                            consectetur.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a data-slide="prev" href="#carouselExampleCaptions2"
+                                               class="carousel-control-prev"><span
+                                                    class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span>
+                                            </a><a data-slide="next" href="#carouselExampleCaptions2"
+                                                   class="carousel-control-next"><span
+                                                class="carousel-control-next-icon"></span> <span
+                                                class="sr-only">Next</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <h4 class="card-title"><a href="{{ url_for('dataSource',dataSourceId=3)}}">DataSource 3</a></h4>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='3' class="dropdown-item dsModifyBtn">修改</a>
+                                                    <a name='3' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bootstrap-carousel">
+                                        <div data-ride="carousel" class="carousel slide" id="carouselExampleCaptions3">
+                                            <ol class="carousel-indicators">
+                                                <li class="" data-slide-to="0"
+                                                    data-target="#carouselExampleCaptions3"></li>
+                                                <li data-slide-to="1" data-target="#carouselExampleCaptions3"
+                                                    class="active"></li>
+                                                <li data-slide-to="2" data-target="#carouselExampleCaptions3"
+                                                    class=""></li>
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}"
+                                                         alt="">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5>First slide label</h5>
+                                                        <p>Nulla vitae elit libero, a pharetra augue mollis
+                                                            interdum.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item active">
+                                                    <img alt="" class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img6.jpg') }}">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5>Second slide label</h5>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img alt="" class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5>Third slide label</h5>
+                                                        <p>Praesent commodo cursus magna, vel scelerisque nisl
+                                                            consectetur.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a data-slide="prev" href="#carouselExampleCaptions3"
+                                               class="carousel-control-prev"><span
+                                                    class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span>
+                                            </a><a data-slide="next" href="#carouselExampleCaptions3"
+                                                   class="carousel-control-next"><span
+                                                class="carousel-control-next-icon"></span> <span
+                                                class="sr-only">Next</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <h4 class="card-title"><a href="{{ url_for('dataSource',dataSourceId=4)}}">DataSource 4</a></h4>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='4' class="dropdown-item dsModifyBtn">修改</a>
+                                                    <a name='4' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bootstrap-carousel">
+                                        <div id="carouselExampleIndicators4" class="carousel slide"
+                                             data-ride="carousel">
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#carouselExampleIndicators4" data-slide-to="0"
+                                                    class="active"></li>
+                                                <li data-target="#carouselExampleIndicators4" data-slide-to="1"
+                                                    class=""></li>
+                                                <li data-target="#carouselExampleIndicators4" data-slide-to="2"
+                                                    class=""></li>
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                    <img class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}"
+                                                         alt="First slide">
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img6.jpg') }}"
+                                                         alt="Second slide">
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}"
+                                                         alt="Third slide">
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleIndicators4"
+                                               data-slide="prev"><span class="carousel-control-prev-icon"></span> <span
+                                                    class="sr-only">Previous</span> </a><a class="carousel-control-next"
+                                                                                           href="#carouselExampleIndicators4"
+                                                                                           data-slide="next"><span
+                                                class="carousel-control-next-icon"></span> <span
+                                                class="sr-only">Next</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <h4 class="card-title"><a href="{{ url_for('dataSource',dataSourceId=1)}}">DataSource 5</a></h4>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <div class="dropright custom-dropdown">
+                                                <span type="button" class="fa fa-cog fa-lg"
+                                                      data-toggle="dropdown" style="cursor: pointer">
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a name='5' class="dropdown-item dsModifyBtn">修改</a>
+                                                    <a name='5' class="dropdown-item sweet-confirm">删除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bootstrap-carousel">
+                                        <div data-ride="carousel" class="carousel slide" id="carouselExampleCaptions5">
+                                            <ol class="carousel-indicators">
+                                                <li class="" data-slide-to="0"
+                                                    data-target="#carouselExampleCaptions5"></li>
+                                                <li data-slide-to="1" data-target="#carouselExampleCaptions5"
+                                                    class="active"></li>
+                                                <li data-slide-to="2" data-target="#carouselExampleCaptions5"
+                                                    class=""></li>
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}"
+                                                         alt="">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5>First slide label</h5>
+                                                        <p>Nulla vitae elit libero, a pharetra augue mollis
+                                                            interdum.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item active">
+                                                    <img alt="" class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img6.jpg') }}">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5>Second slide label</h5>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img alt="" class="d-block w-100"
+                                                         src="{{ url_for('static',filename='quix/images/big/img5.jpg') }}">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5>Third slide label</h5>
+                                                        <p>Praesent commodo cursus magna, vel scelerisque nisl
+                                                            consectetur.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a data-slide="prev" href="#carouselExampleCaptions5"
+                                               class="carousel-control-prev"><span
+                                                    class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span>
+                                            </a><a data-slide="next" href="#carouselExampleCaptions5"
+                                                   class="carousel-control-next"><span
+                                                class="carousel-control-next-icon"></span> <span
+                                                class="sr-only">Next</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-12 m-b-30">-->
+                    <!--                            <h4 class="d-inline">已有数据源</h4>-->
+                    <!--                            <p class="text-muted">This is 3 column contents</p>-->
+                    <!--                            <div class="row">-->
+                    <!--                                <div class="col-md-6 col-lg-3">-->
+                    <!--                                    <div class="card">-->
+                    <!--                                        <img class="img-fluid"-->
+                    <!--                                             src="{{ url_for('static', filename='quix/images/big/img1.jpg') }}" alt="">-->
+                    <!--                                        <div class="card-body">-->
+                    <!--                                            <h5 class="card-title"><a href="{{ url_for('dataSource',dataSourceId=1)}}">DataSource 1</a></h5>-->
+                    <!--                                            <p class="card-text">This is a wider card with supporting text and below as-->
+                    <!--                                                a natural lead-in to the additional content. This content is a little-->
+                    <!--                                                bit longer.</p>-->
+                    <!--                                            <p class="card-text"><small class="text-muted">Last updated 3 mins-->
+                    <!--                                                ago</small>-->
+                    <!--                                            </p>-->
+                    <!--                                        </div>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                &lt;!&ndash; End Col &ndash;&gt;-->
+                    <!--                                <div class="col-md-6 col-lg-3">-->
+                    <!--                                    <div class="card">-->
+                    <!--                                        <img class="img-fluid"-->
+                    <!--                                             src="{{ url_for('static', filename='quix/images/big/img2.jpg') }}" alt="">-->
+                    <!--                                        <div class="card-body">-->
+                    <!--                                            <h5 class="card-title"><a href="{{ url_for('dataSource',dataSourceId=2)}}">DataSource 2</a></h5>-->
+                    <!--                                            <p class="card-text">This is a wider card with supporting text and below as-->
+                    <!--                                                a natural lead-in to the additional content. This content is a little-->
+                    <!--                                                bit longer.</p>-->
+                    <!--                                            <p class="card-text"><small class="text-muted">Last updated 3 mins-->
+                    <!--                                                ago</small>-->
+                    <!--                                            </p>-->
+                    <!--                                        </div>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                &lt;!&ndash; End Col &ndash;&gt;-->
+                    <!--                                <div class="col-md-6 col-lg-3">-->
+                    <!--                                    <div class="card">-->
+                    <!--                                        <img class="img-fluid"-->
+                    <!--                                             src="{{ url_for('static', filename='quix/images/big/img3.jpg') }}" alt="">-->
+                    <!--                                        <div class="card-body">-->
+                    <!--                                            <h5 class="card-title"><a href="{{ url_for('dataSource',dataSourceId=3)}}">DataSource 3</a></h5>-->
+                    <!--                                            <p class="card-text">This is a wider card with supporting text and below as-->
+                    <!--                                                a natural lead-in to the additional content. This content is a little-->
+                    <!--                                                bit longer.</p>-->
+                    <!--                                            <p class="card-text"><small class="text-muted">Last updated 3 mins-->
+                    <!--                                                ago</small>-->
+                    <!--                                            </p>-->
+                    <!--                                        </div>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                &lt;!&ndash; End Col &ndash;&gt;-->
+                    <!--                                <div class="col-md-6 col-lg-3">-->
+                    <!--                                    <div class="card">-->
+                    <!--                                        <img class="img-fluid"-->
+                    <!--                                             src="{{ url_for('static', filename='quix/images/big/img4.jpg') }}" alt="">-->
+                    <!--                                        <div class="card-body">-->
+                    <!--                                            <h5 class="card-title"><a href="{{ url_for('dataSource',dataSourceId=4)}}">DataSource 4</a></h5>-->
+                    <!--                                            <p class="card-text">This is a wider card with supporting text and below as-->
+                    <!--                                                a natural lead-in to the additional content. This content is a little-->
+                    <!--                                                bit longer.</p>-->
+                    <!--                                            <p class="card-text"><small class="text-muted">Last updated 3 mins-->
+                    <!--                                                ago</small>-->
+                    <!--                                            </p>-->
+                    <!--                                        </div>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                &lt;!&ndash; End Col &ndash;&gt;-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #/ container -->
+    <!--Modal --- newDataSourceModal -->
+    <div class="modal fade" id="newDataSourceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">新建一个数据源</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="newDSForm">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="newDSName" placeholder="DataSource Name">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="newDSSaveBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal --- modify -->
+    <div class="modal fade" id="dsModifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dsModifyModalTitle">数据源集 Id:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="dataModifyModalForm">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">数据源集名称:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="dataSourceName" placeholder="请输入数据源集名称">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="dsModifyModalSaveBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
+
+
+<!--**********************************
+    Footer start
+***********************************-->
+<div class="footer">
+    <div class="copyright">
+        <p>2020 Copyright &copy; Designed & Developed by 380&369 team, Algorithms: <a href="#">SDC</a>, Back-end: <a
+                href="#">HYL</a>, Front-end: <a href="#">Hly</a></p>
+    </div>
+</div>
+<!--**********************************
+    Footer end
+***********************************-->
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+<!--<script type="text/javascript" src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>-->
+
+<script src="{{ url_for('static', filename='quix/plugins/common/common.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/custom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/settings.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/gleek.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/js/styleSwitcher.js') }}"></script>
+<!--&lt;!&ndash; Chartjs &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chart.js/Chart.bundle.min.js') }}"></script>-->
+<!--&lt;!&ndash; Circle progress &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/circle-progress/circle-progress.min.js') }}"></script>-->
+<!--&lt;!&ndash; Datamap &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/d3v3/index.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/topojson/topojson.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/datamaps/datamaps.world.min.js') }}"></script>-->
+<!--&lt;!&ndash; Morrisjs &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/raphael/raphael.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/morris/morris.min.js') }}"></script>-->
+<!--&lt;!&ndash; Pignose Calender &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/moment/moment.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/pg-calendar/js/pignose.calendar.min.js') }}"></script>-->
+<!--&lt;!&ndash; ChartistJS &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chartist/js/chartist.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='quix/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>-->
+
+
+<!--<script src="{{ url_for('static', filename='quix/js/dashboard/dashboard-1.js') }}"></script>-->
+
+<!--<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>-->
+<!--{{ url_for('static', filename='js/hwr.js') }}-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/hwr.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/plugins/piexif.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/plugins/purify.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/fileinput.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/fileinput/js/locales/zh.js') }}"></script>
+
+<!-- Toastr -->
+<script src="{{ url_for('static', filename='quix/plugins/toastr/js/toastr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='quix/plugins/toastr/js/toastr.init.js') }}"></script>
+
+<!-- Sweetalert -->
+<script src="{{ url_for('static', filename='quix/plugins/sweetalert/js/sweetalert.min.js') }}"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        console.log("js init");
+
+        let modify_btn_list = document.getElementsByClassName("dsModifyBtn");
+        let delete_btn_list = document.getElementsByClassName("sweet-confirm");
+        console.log(modify_btn_list.length);
+
+        if (checkIsNullOrEmpty(modify_btn_list)) {
+            for (var i = 0; i < modify_btn_list.length; i++) {
+                modify_btn_list[i].onclick = function () {
+                    let id = this.getAttribute('name');
+                    console.log(id);
+                    $('#dsModifyModal').find('#dsModifyModalTitle').empty().append('数据集 Id: ' + id);
+                    $('#dsModifyModal').modal('show');
+                }
+            }
+        }
+
+        if (checkIsNullOrEmpty(delete_btn_list)) {
+            for (var i = 0; i < delete_btn_list.length; i++) {
+                delete_btn_list[i].onclick = function () {
+                    let id = this.getAttribute('name');
+                    console.log(id);
+                    swal({
+                        title: "确定删除数据:" + id + " 吗 ?",
+                        text: "删除后就不可恢复 !!",
+                        type: "warning",
+                        showCancelButton: !0,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确定, 删除它 !!",
+                        closeOnConfirm: !1
+                    }, function () {
+                        swal("已删除 !!", "Hey, 已删除数据:" + id + " !!", "success")
+                    });
+                }
+            }
+        }
+
+        toastr.options = {
+            timeOut: 5e3,
+            closeButton: !0,
+            debug: !1,
+            newestOnTop: !0,
+            progressBar: !0,
+            positionClass: "toast-bottom-right",
+            preventDuplicates: !0,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: !1
+
+        };
+
+        $("#trainImageInput").fileinput({
+            uploadUrl: "up_train_data",  //还写具体上传地址才显示可拖拽区域
+            language: 'zh', //设置语言
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            uploadAsync: false, //默认异步上传
+            browseIcon: '<i class="fa fa-folder-open"></i>&nbsp;',
+            browseClass: "btn mb-1 btn-info", //按钮样式
+            removeIcon: '<i class="fa fa-trash"></i>',
+            removeClass: 'btn mb-1 btn-flat btn-danger',
+            cancelIcon: '<i class="fa fa-ban"></i>',
+            cancelClass: 'btn mb-1 btn-info',
+            pauseIcon: '<i class="fa fa-pause-circle"></i>',
+            pauseClass: 'btn mb-1 btn-info',
+            uploadIcon: '<i class="fa fa-upload"></i>',
+            uploadClass: 'btn mb-1 btn-info',
+            previewZoomButtonIcons: {
+                prev: '<i class="fa fa-caret-left"></i>',
+                next: '<i class="fa fa-caret-right"></i>',
+                toggleheader: '<i class="fa fa-arrows-v"></i>',
+                fullscreen: '<i class="fa fa-arrows-alt"></i>',
+                borderless: '<i class="fa fa-expand"></i>',
+                close: '<i class="fa fa-times"></i>'
+            },
+            previewZoomButtonClasses: {
+                prev: 'btn btn-navigate',
+                next: 'btn btn-navigate',
+                toggleheader: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                fullscreen: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                borderless: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                close: 'btn btn-sm btn-kv btn-default btn-outline-secondary'
+            },
+            fileActionSettings: {
+                removeIcon: '<i class="fa fa-trash"></i>',
+                removeClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                removeErrorClass: 'btn btn-sm btn-kv btn-danger',
+                removeTitle: 'Remove file',
+                uploadIcon: '<i class="fa fa-upload"></i>',
+                uploadClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                uploadTitle: 'Upload file',
+                uploadRetryIcon: '<i class="fa fa-repeat"></i>',
+                uploadRetryTitle: 'Retry upload',
+                downloadIcon: '<i class="fa fa-arrow-circle-down"></i>',
+                downloadClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                downloadTitle: 'Download file',
+                zoomIcon: '<i class="fa fa-search-plus"></i>',
+                zoomClass: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
+                zoomTitle: 'View Details',
+                dragIcon: '<i class="fa fa-arrows"></i>',
+                dragClass: 'text-info',
+                dragTitle: 'Move / Rearrange',
+                dragSettings: {},
+                indicatorNew: '<i class="fa fa-plus-circle text-warning"></i>',
+                indicatorSuccess: '<i class="fa fa-check-circle text-success"></i>',
+                indicatorError: '<i class="fa fa-exclamation-circle text-danger"></i>',
+                indicatorLoading: '<i class="fa fa-hourglass-half text-muted"></i>',
+                indicatorPaused: '<i class="fa fa-pause text-primary"></i>',
+            },
+            autoReplace: false,
+            maxFileCount: 20, //表示允许同时上传的最大文件个数
+            maxTotalFileCount: 0,
+            enctype: 'multipart/form-data',
+            maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+            // minImageWidth: 500, //图片的最小宽度
+            // minImageHeight: 500,//图片的最小高度
+            // maxImageWidth: 2500,//图片的最大宽度
+            // maxImageHeight: 4000,//图片的最大高度
+            resizeImage: true,
+            resizePreference: 'width',
+            showUpload: true, //是否显示上传按钮
+            showRemove: true, //显示移除按钮
+            showPreview: true, //是否显示预览
+            previewFileType: ['jpg', 'gif', 'png', 'jpeg'],
+            showCaption: true,//是否显示长条标题
+            dropZoneEnabled: false,//是否显示拖拽区域
+            // autoReplace: true,
+            // msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            msgAjaxError: 'Something went wrong with the {operation} operation. Please try again later!', //错误提示
+            // uploadExtraData: {"destination": "blogsss"},//上传携带参数
+            uploadExtraData: function () {
+                console.log("uploadExtraData");
+                let dataSourceName = $('#dataSourceSelector').find('option[selected]').text();
+                let dataSourceId = $('#dataSourceSelector').find('option[selected]').val();
+                console.log('dataSourceName:' + dataSourceName);
+                console.log('dataSourceId:' + dataSourceId);
+                return {'dataSourceName': dataSourceName, 'dataSourceId': dataSourceId};
+            }
+        }).on("filepreupload", function (event, files) {  //选中要上传的文件后回调
+            // $(this).fileinput("upload");  //自动上传
+
+        }).on("filebatchuploadcomplete", function (event, data) {
+            toastr.success("数据上传成功!", "Data");
+            if (datalist.response) {
+                console.log("处理成功!");
+                console.log(datalist.response);
+            }
+        }).on("fileuploaderror", function (event, data) {
+            toastr.error("数据上传错误," + datalist.response, "Data");
+        });
+
+    });
+
+    // function checkIsNullOrEmpty(value) {
+    //     //正则表达式用于判斷字符串是否全部由空格或换行符组成
+    //     var reg = /^\s*$/
+    //     //返回值为true表示不是空字符串
+    //     return (value != null && value != undefined && !reg.test(value))
+    // }
+
+    $("#newDSSaveBtn").click(function () {
+        let newDSName = $('#newDSForm').find('input[name*=newDSName]').val();
+        console.log(newDSName);
+        if (checkIsNullOrEmpty(newDSName)) {
+            $('#dataSourceSelector').find('option[selected]').removeAttr('selected');
+            let newOption = $('<option></option>').attr('value', '-1').attr('selected', 'selected').append(newDSName.trim());
+            $('#dataSourceSelector').append(newOption)
+            $('#newDataSourceModal').modal('hide');
+        } else {
+            toastr.error("数据源名称不能为空!", "Data");
+            console.log('数据源名称不能为空!');
+        }
+    });
+</script>
+</body>
+
+</html>
